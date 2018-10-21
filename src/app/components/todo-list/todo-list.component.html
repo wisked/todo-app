@@ -1,0 +1,46 @@
+<div class="todo-container">
+  <form class="controls">
+    <ng-container *ngFor="let control of listControls; index as i">
+      <label [for]="control.title">
+        <input type="radio"
+               [name]="control.title"
+               [id]="control.title"
+               [checked]="control.value"
+               [value]="control.title"
+               (change)="toogleListControls($event, i)"
+               maxlength="50">{{control.title}}
+      </label>
+    </ng-container>
+  </form>
+  <div class="tasks-manager">
+    <input class="tasks-manager__title"
+           type="text"
+           placeholder="Type task title"
+           (keydown.enter)="onKeyDown($event)"
+           [(ngModel)]="todoTitle">
+    <button class="tasks-manager__add-button"
+            (click)="addTask($event)">Add taks</button>
+  </div>
+  <div class="todo-list">
+    <div *ngFor="let todo of todoList; index as i"
+         class="todo-list__todo">
+      <label class="container">
+        <input type="checkbox"
+               [checked]="todo.checked"
+               (change)="completeTask(i)"
+               class="todo-list__todo__checked">
+        <span class="checkmark"></span>
+      </label>
+      <input type="text"
+             [value]="todo.title"
+             (input)="changeTitle($event, i)"
+             class="todo-list__todo__title"
+             [class.is-disabled]="todo.checked"
+             [disabled]="todo.checked">
+      <a class="todo-list__todo__close">
+        <span (click)="deleteTodo(i)"
+              class="close-icon"></span>
+      </a>
+    </div>
+  </div>
+</div>
